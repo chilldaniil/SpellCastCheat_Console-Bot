@@ -28,7 +28,7 @@ namespace SpellCastCheat_Console
                 string letterFilePath = Path.Combine(templatePath, $"{letter}.png");
                 if (File.Exists(letterFilePath))
                 {
-                    _letterTemplates[letter] = new Mat(letterFilePath, ImreadModes.Color);
+                    _letterTemplates[letter] = new Mat(letterFilePath, ImreadModes.Grayscale); // Use grayscale for letters
                 }
             }
 
@@ -43,6 +43,7 @@ namespace SpellCastCheat_Console
             _boardRect = DetectBoard(preprocessedImage);
 
             Mat board = new Mat(_image, _boardRect);
+            Console.WriteLine($"Detected board size: {board.Width}x{board.Height}");
             return SegmentAndParseGrid(board);
         }
 
@@ -232,7 +233,10 @@ namespace SpellCastCheat_Console
         #region Letter Matching
         private char MatchLetter(Mat cell)
         {
-            cell = PreprocessCellImage(cell);
+            Mat grayCell = new Mat();
+            Cv2.CvtColor(cell, grayCell, ColorConversionCodes.BGR2GRAY); // Convert cell to grayscale for letter matching
+
+            grayCell = PreprocessCellImage(grayCell);
 
             char bestMatch = '?';
             double maxVal = 0.0;
@@ -240,7 +244,7 @@ namespace SpellCastCheat_Console
             foreach (var template in _letterTemplates)
             {
                 double threshold = (template.Key == 'G' || template.Key == 'Q') ? 0.92 : 0.89;
-                double result = MatchTemplateValue(cell, template.Value, threshold);
+                double result = MatchTemplateValue(grayCell, template.Value, threshold);
                 if (result > maxVal)
                 {
                     maxVal = result;
