@@ -25,12 +25,20 @@ Bored from cheaters? Become a cheater with SpellCast Cheat Console! This tool wi
 
 ### Example Result
 
-**No Swap**
-![Example Result No Swap 100ms](SpellCastCheat_Console/examples/ex_no_swap.png)
-**Single Swap**
-![Example Result Single Swap 7s](SpellCastCheat_Console/examples/ex_single_swap.png)
-**Double Swap**
-![Example Result Double Swap 7min](SpellCastCheat_Console/examples/ex_double_swap.png)
+<div style="display: flex; flex-wrap: wrap;">
+    <div style="margin-right: 10px; text-align: center;">
+        <p><strong>No Swap</strong></p>
+        <img src="SpellCastCheat_Console/examples/ex_no_swap.png" alt="Example Result No Swap 100ms" style="max-width: 100px;">
+    </div>
+    <div style="margin-right: 10px; text-align: center;">
+        <p><strong>Single Swap</strong></p>
+        <img src="SpellCastCheat_Console/examples/ex_single_swap.png" alt="Example Result Single Swap 7s" style="max-width: 100px;">
+    </div>
+    <div style="text-align: center;">
+        <p><strong>Double Swap</strong></p>
+        <img src="SpellCastCheat_Console/examples/ex_double_swap.png" alt="Example Result Double Swap 7min" style="max-width: 100px;">
+    </div>
+</div>
 
 ### Close the Console
 
