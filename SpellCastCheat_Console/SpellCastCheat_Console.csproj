@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="OpenCvSharp4" Version="4.10.0.20240616" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.10.0.20240616" />
     <PackageReference Include="SkiaSharp" Version="2.88.8" />
@@ -40,68 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="bin\Debug\net6.0\SpellCastCheat_Console.deps.json" />
-    <Content Include="bin\Debug\net6.0\SpellCastCheat_Console.runtimeconfig.json" />
-    <Content Include="bin\Debug\net6.0\templates\2X.png" />
-    <Content Include="bin\Debug\net6.0\templates\A.png" />
-    <Content Include="bin\Debug\net6.0\templates\B.png" />
-    <Content Include="bin\Debug\net6.0\templates\C.png" />
-    <Content Include="bin\Debug\net6.0\templates\D.png" />
-    <Content Include="bin\Debug\net6.0\templates\DL.png" />
-    <Content Include="bin\Debug\net6.0\templates\E.png" />
-    <Content Include="bin\Debug\net6.0\templates\F.png" />
-    <Content Include="bin\Debug\net6.0\templates\G.png" />
-    <Content Include="bin\Debug\net6.0\templates\H.png" />
-    <Content Include="bin\Debug\net6.0\templates\I.png" />
-    <Content Include="bin\Debug\net6.0\templates\J.png" />
-    <Content Include="bin\Debug\net6.0\templates\K.png" />
-    <Content Include="bin\Debug\net6.0\templates\L.png" />
-    <Content Include="bin\Debug\net6.0\templates\M.png" />
-    <Content Include="bin\Debug\net6.0\templates\N.png" />
-    <Content Include="bin\Debug\net6.0\templates\O.png" />
-    <Content Include="bin\Debug\net6.0\templates\P.png" />
-    <Content Include="bin\Debug\net6.0\templates\Q.png" />
-    <Content Include="bin\Debug\net6.0\templates\R.png" />
-    <Content Include="bin\Debug\net6.0\templates\S.png" />
-    <Content Include="bin\Debug\net6.0\templates\T.png" />
-    <Content Include="bin\Debug\net6.0\templates\TL.png" />
-    <Content Include="bin\Debug\net6.0\templates\U.png" />
-    <Content Include="bin\Debug\net6.0\templates\V.png" />
-    <Content Include="bin\Debug\net6.0\templates\W.png" />
-    <Content Include="bin\Debug\net6.0\templates\X.png" />
-    <Content Include="bin\Debug\net6.0\templates\Y.png" />
-    <Content Include="bin\Debug\net6.0\templates\Z.png" />
-    <Content Include="bin\Debug\net6.0\words.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\net6.0\OpenCvSharp.dll" />
-    <None Include="bin\Debug\net6.0\runtimes\linux-arm64\native\libSkiaSharp.so" />
-    <None Include="bin\Debug\net6.0\runtimes\linux-arm\native\libSkiaSharp.so" />
-    <None Include="bin\Debug\net6.0\runtimes\linux-musl-x64\native\libSkiaSharp.so" />
-    <None Include="bin\Debug\net6.0\runtimes\linux-x64\native\libSkiaSharp.so" />
-    <None Include="bin\Debug\net6.0\runtimes\osx\native\libSkiaSharp.dylib" />
-    <None Include="bin\Debug\net6.0\runtimes\win-arm64\native\libSkiaSharp.dll" />
-    <None Include="bin\Debug\net6.0\runtimes\win-x64\native\libSkiaSharp.dll" />
-    <None Include="bin\Debug\net6.0\runtimes\win-x64\native\OpenCvSharpExtern.dll" />
-    <None Include="bin\Debug\net6.0\runtimes\win-x64\native\opencv_videoio_ffmpeg4100_64.dll" />
-    <None Include="bin\Debug\net6.0\runtimes\win-x86\native\libSkiaSharp.dll" />
-    <None Include="bin\Debug\net6.0\runtimes\win-x86\native\OpenCvSharpExtern.dll" />
-    <None Include="bin\Debug\net6.0\runtimes\win-x86\native\opencv_videoio_ffmpeg4100.dll" />
-    <None Include="bin\Debug\net6.0\SkiaSharp.dll" />
-    <None Include="bin\Debug\net6.0\SpellCastCheat_Console.dll" />
-    <None Include="bin\Debug\net6.0\SpellCastCheat_Console.exe" />
-    <None Include="bin\Debug\net6.0\SpellCastCheat_Console.pdb" />
-    <None Include="bin\Debug\net6.0\tessdata\eng.traineddata" />
-    <None Include="bin\Debug\net6.0\Tesseract.dll" />
-    <None Include="bin\Debug\net6.0\x64\leptonica-1.82.0.dll" />
-    <None Include="bin\Debug\net6.0\x64\tesseract50.dll" />
-    <None Include="bin\Debug\net6.0\x86\leptonica-1.82.0.dll" />
-    <None Include="bin\Debug\net6.0\x86\tesseract50.dll" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="bin\Debug\net6.0\Images\Results\" />
+    <Folder Include="App_Data\Images\Results\" />
   </ItemGroup>
 
 </Project>
