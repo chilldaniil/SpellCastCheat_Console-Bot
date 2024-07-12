@@ -114,18 +114,18 @@ public class Program
             imageProcessor.SaveResultsImages(outputImagePath, board.Grid, bestWords);
 
             // Find the best N words with double-swap
-            config.WordSearchMode = WordSearchMode.DoubleSwap;
-            bestWords = wordFinder.Search(config);
+            //config.WordSearchMode = WordSearchMode.DoubleSwap;
+            //bestWords = wordFinder.Search(config);
 
-            for (int i = 0; i < bestWords.Count; i++)
-            {
-                var wordResult = bestWords[i];
-                Console.WriteLine($"Word {i + 1}: {wordResult.Word} with score: {wordResult.Score}");
-            }
+            //for (int i = 0; i < bestWords.Count; i++)
+            //{
+            //    var wordResult = bestWords[i];
+            //    Console.WriteLine($"Word {i + 1}: {wordResult.Word} with score: {wordResult.Score}");
+            //}
 
-            // Save and open concatenated result image
-            outputImagePath = Path.Combine("Images/Results", $"double_swap_result_{DateTime.Now.Ticks}.png");
-            imageProcessor.SaveResultsImages(outputImagePath, board.Grid, bestWords);
+            //// Save and open concatenated result image
+            //outputImagePath = Path.Combine("Images/Results", $"double_swap_result_{DateTime.Now.Ticks}.png");
+            //imageProcessor.SaveResultsImages(outputImagePath, board.Grid, bestWords);
         }
         catch
         {
