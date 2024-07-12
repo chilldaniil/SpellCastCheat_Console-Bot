@@ -120,7 +120,7 @@
             var bestWords = new List<WordResultDTO>();
             var originalGrid = (LetterModel[,])_board.Grid.Clone();
 
-            var filteredWords = FilterWords(_wordList.Words.Where(word => word.Length >= config.SwapWordsMinLength && word.Length <= config.SwapWordsMaxLength), availableLetters, filteringMode);
+            var filteredWords = FilterWords(_wordList.Words.Where(word => word.Length >= config.DoubleSwapWordsMinLength && word.Length <= config.DoubleSwapWordsMaxLength), availableLetters, filteringMode);
 
             char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
 
