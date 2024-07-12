@@ -6,7 +6,7 @@
 
         public WordList()
         {
-            Words = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "words.txt")).ToList();
+            Words = File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data/words.txt")).ToList();
         }
     }
 }

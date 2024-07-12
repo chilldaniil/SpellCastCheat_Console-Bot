@@ -17,11 +17,11 @@ namespace SpellCastCheat_Console
             _image = new Mat(imagePath, ImreadModes.Color);
 
             // Load Tesseract
-            string tessDataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tessdata");
+            string tessDataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data/tessdata");
             _ = new Tesseract.TesseractEngine(tessDataPath, "eng", Tesseract.EngineMode.Default);
 
             _letterTemplates = new Dictionary<char, Mat>();
-            string templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "templates");
+            string templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "App_Data/templates");
 
             foreach (char letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
             {

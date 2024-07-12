@@ -12,7 +12,7 @@
     <EmbeddedResource Remove="bin\**" />
     <None Remove="bin\**" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="OpenCvSharp4" Version="4.10.0.20240616" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.10.0.20240616" />
@@ -43,6 +43,18 @@
 
   <ItemGroup>
     <None Remove="C:\Users\ba3ej\.nuget\packages\tesseract\5.2.0\build\\..\x64\tesseract50.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App_Data\templates\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\tessdata\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\words.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

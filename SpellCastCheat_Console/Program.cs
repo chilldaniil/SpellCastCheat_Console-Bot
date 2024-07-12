@@ -21,6 +21,7 @@ public class Program
 
         // Set path for putting SpellCast board screenshots
         string folderPath = Path.Combine(Environment.CurrentDirectory, "Images");
+        Directory.CreateDirectory(folderPath); // Ensure the directory exists
 
         // Initialize FileSystemWatcher
         FileSystemWatcher watcher = new FileSystemWatcher
