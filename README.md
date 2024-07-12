@@ -25,9 +25,9 @@ Bored from cheaters? Become a cheater with SpellCast Cheat Console! This tool wi
 
 ### Example Result
 
-![Example Result No Swap 100ms](examples/ex_no_swap.png)
-![Example Result Single Swap 7s](examples/ex_single_swap.png)
-![Example Result Double Swap 7min](examples/ex_double_swap.png)
+![Example Result No Swap 100ms](SpellCastCheat_Console/examples/ex_no_swap.png)
+![Example Result Single Swap 7s](SpellCastCheat_Console/examples/ex_single_swap.png)
+![Example Result Double Swap 7min](SpellCastCheat_Console/examples/ex_double_swap.png)
 
 ### Close the Console
 
