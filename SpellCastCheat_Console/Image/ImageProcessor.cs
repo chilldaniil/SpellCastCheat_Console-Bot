@@ -7,10 +7,14 @@ namespace SpellCastCheat_Console
     {
         private readonly Mat _image;
         private readonly Dictionary<char, Mat> _letterTemplates;
-        private readonly Mat _dlTemplate;
-        private readonly Mat _tlTemplate;
-        private readonly Mat _doubleWordTemplate;
+        private Mat _dlTemplate;
+        private Mat _tlTemplate;
+        private Mat _doubleWordTemplate;
         private Rect _boardRect;
+
+        // Define the scale ratios - template size to board size for resizing templates depends on board size
+        private const double ScaleRatioX = 12.73;
+        private const double ScaleRatioY = 12.82;
 
         public ImageProcessor(string imagePath)
         {
@@ -42,9 +46,28 @@ namespace SpellCastCheat_Console
             Mat preprocessedImage = PreprocessImage(_image);
             _boardRect = DetectBoard(preprocessedImage);
 
+            Console.WriteLine($"Detected board size: {_boardRect.Width}x{_boardRect.Height}");
+
             Mat board = new Mat(_image, _boardRect);
-            Console.WriteLine($"Detected board size: {board.Width}x{board.Height}");
+            ResizeTemplates(_boardRect.Width, _boardRect.Height);
             return SegmentAndParseGrid(board);
+        }
+
+        private void ResizeTemplates(int boardWidth, int boardHeight)
+        {
+            int targetWidth = (int)(boardWidth / ScaleRatioX);
+            int targetHeight = (int)(boardHeight / ScaleRatioY);
+
+            Console.WriteLine($"Resizing templates to: {targetWidth}x{targetHeight}");
+
+            foreach (var key in _letterTemplates.Keys.ToList())
+            {
+                _letterTemplates[key] = _letterTemplates[key].Resize(new Size(targetWidth, targetHeight));
+            }
+
+            _dlTemplate = _dlTemplate.Resize(new Size(targetWidth, targetHeight));
+            _tlTemplate = _tlTemplate.Resize(new Size(targetWidth, targetHeight));
+            _doubleWordTemplate = _doubleWordTemplate.Resize(new Size(targetWidth, targetHeight));
         }
 
         public void SaveResultsImages(string outputImagePath, LetterModel[,] grid, List<WordResultDTO> wordResults)
@@ -87,7 +110,6 @@ namespace SpellCastCheat_Console
 
                 // Add word with score text
                 var textPoint = new Point(_boardRect.X, _boardRect.Y);
-                //var textPoint = new Point(_boardRect.X + grid[bottomMiddle.X, bottomMiddle.Y].LetterCenterX, _boardRect.Y + grid[bottomMiddle.X, bottomMiddle.Y].LetterCenterY + 10);
                 Cv2.Rectangle(resultImage, new Rect(textPoint.X - 40, textPoint.Y - 20, 350, 40), Scalar.White, -1);
                 Cv2.PutText(resultImage, $"{wordResult.Word} - {wordResult.Score}", textPoint, HersheyFonts.HersheySimplex, 0.8, Scalar.Black, 2);
 
@@ -104,12 +126,10 @@ namespace SpellCastCheat_Console
             concatenatedResultImage.SaveImage(outputImagePath);
 
             // Open the image using the default photo viewer
-            //Process.Start(new ProcessStartInfo(outputImagePath) { UseShellExecute = true });
             string fullPath = Path.GetFullPath(outputImagePath);
             string url = "file:///" + fullPath.Replace("\\", "/");
             Process.Start(new ProcessStartInfo("explorer.exe", url) { UseShellExecute = true });
         }
-
 
         private Mat ConcatenateImagesVertically(List<Mat> images)
         {
