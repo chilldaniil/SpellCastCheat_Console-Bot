@@ -34,6 +34,7 @@ class Program
         botClient.OnMessage += Bot_OnMessage;
         botClient.StartReceiving();
 
+        Console.WriteLine("Bot is running. Press any key to exit");
         Console.ReadKey();
 
         botClient.StopReceiving();
