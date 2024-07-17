@@ -262,7 +262,8 @@ namespace SpellCastCheat.BusinessLogic
 
             foreach (var template in _letterTemplates)
             {
-                double threshold = (template.Key == 'G' || template.Key == 'Q') ? 0.92 : 0.89;
+                //double threshold = (template.Key == 'G' || template.Key == 'Q') ? 0.9 : 0.9;
+                double threshold = 0.8;
                 double result = MatchTemplateValue(grayCell, template.Value, threshold);
                 if (result > maxVal)
                 {
