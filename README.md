@@ -1,6 +1,6 @@
 # SpellCast Cheat Console
 
-Bored from cheaters? Become a cheater with SpellCast Cheat Console! This tool will help you find the biggest words and increase your English vocabulary.
+Bored from cheaters? Become a cheater with SpellCast Cheat Console or Bot! This tool will help you find the biggest words and increase your English vocabulary.
 
 
 **Also available as [TelegramBot](https://t.me/SpellCastCheatBot)**
