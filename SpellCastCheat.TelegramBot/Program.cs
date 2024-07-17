@@ -55,7 +55,7 @@ class Program
         {
             await botClient.SendTextMessageAsync(
                 chatId: e.Message.Chat.Id,
-                text: "Send me your board screen and I will find for you the best words"
+                text: "Send me your board screen with blue frame included and I will find for you the best words"
             );
         }
         else if (e.Message.Type == MessageType.Photo)
@@ -72,12 +72,23 @@ class Program
                 return;
             }
 
-            using (var imageStream = new MemoryStream())
+            try
             {
-                await botClient.DownloadFileAsync(file.FilePath, imageStream);
-                imageStream.Seek(0, SeekOrigin.Begin);
+                using (var imageStream = new MemoryStream())
+                {
+                    await botClient.DownloadFileAsync(file.FilePath, imageStream);
+                    imageStream.Seek(0, SeekOrigin.Begin);
 
-                await ProcessImageAsync(e.Message.Chat.Id, imageStream);
+                    await ProcessImageAsync(e.Message.Chat.Id, imageStream);
+                }
+            }
+            catch
+            {
+                await botClient.SendTextMessageAsync(
+                    chatId: e.Message.Chat.Id,
+                    text: "Can't detect board or letters, please use higer resolution image and don't forget to include blue border of board on your screen."
+                );
+                return;
             }
         }
     }
