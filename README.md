@@ -1,4 +1,4 @@
-# SpellCastCheat_Console
+# SpellCast Cheat Console
 
 Bored from cheaters? Become a cheater with SpellCast Cheat Console! This tool will help you find the biggest words and increase your English vocabulary.
 
