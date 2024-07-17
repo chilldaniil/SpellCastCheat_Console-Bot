@@ -47,8 +47,6 @@ namespace SpellCastCheat.BusinessLogic
             Mat preprocessedImage = PreprocessImage(_image);
             _boardRect = DetectBoard(preprocessedImage);
 
-            Console.WriteLine($"Detected board size: {_boardRect.Width}x{_boardRect.Height}");
-
             Mat board = new Mat(_image, _boardRect);
             ResizeTemplates(_boardRect.Width, _boardRect.Height);
             return SegmentAndParseGrid(board);
@@ -58,8 +56,6 @@ namespace SpellCastCheat.BusinessLogic
         {
             int targetWidth = (int)(boardWidth / ScaleRatioX);
             int targetHeight = (int)(boardHeight / ScaleRatioY);
-
-            Console.WriteLine($"Resizing templates to: {targetWidth}x{targetHeight}");
 
             foreach (var key in _letterTemplates.Keys.ToList())
             {
@@ -246,8 +242,6 @@ namespace SpellCastCheat.BusinessLogic
                 Point center = new Point(maxLoc.X + template.Width / 2, maxLoc.Y + template.Height / 2);
                 specialTiles.Add((type, center));
 
-                Console.WriteLine($"{type} marker detected at {center}");
-
                 // Invalidate the matched area to find new matches
                 Cv2.FloodFill(result, maxLoc, new Scalar(0), out _, new Scalar(0.1), new Scalar(1.0));
                 Cv2.MinMaxLoc(result, out _, out maxVal, out _, out maxLoc);
@@ -332,8 +326,6 @@ namespace SpellCastCheat.BusinessLogic
                         grid[closestRow, closestCol].IsDoubleWord = true;
                         break;
                 }
-
-                Console.WriteLine($"{type} marker mapped to letter '{grid[closestRow, closestCol].Letter}' at ({closestRow}, {closestCol})");
             }
         }
 
