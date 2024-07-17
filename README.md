@@ -28,15 +28,15 @@ Bored from cheaters? Become a cheater with SpellCast Cheat Console! This tool wi
 <div style="display: flex; flex-wrap: wrap;">
     <div style="margin-right: 10px; text-align: center;">
         <p><strong>No Swap</strong></p>
-        <img src="SpellCastCheat_Console/examples/ex_no_swap.png" alt="Example Result No Swap 100ms" style="max-width: 100px;">
+        <img src="SpellCastCheat.Console/examples/ex_no_swap.png" alt="Example Result No Swap 100ms" style="max-width: 100px;">
     </div>
     <div style="margin-right: 10px; text-align: center;">
         <p><strong>Single Swap</strong></p>
-        <img src="SpellCastCheat_Console/examples/ex_single_swap.png" alt="Example Result Single Swap 7s" style="max-width: 100px;">
+        <img src="SpellCastCheat.Console/examples/ex_single_swap.png" alt="Example Result Single Swap 7s" style="max-width: 100px;">
     </div>
     <div style="text-align: center;">
         <p><strong>Double Swap</strong></p>
-        <img src="SpellCastCheat_Console/examples/ex_double_swap.png" alt="Example Result Double Swap 7min" style="max-width: 100px;">
+        <img src="SpellCastCheat.Console/examples/ex_double_swap.png" alt="Example Result Double Swap 7min" style="max-width: 100px;">
     </div>
 </div>
 
