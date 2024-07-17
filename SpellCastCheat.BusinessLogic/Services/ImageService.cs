@@ -1,9 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using OpenCvSharp;
 
-namespace SpellCastCheat_Console
+namespace SpellCastCheat.BusinessLogic
 {
-    public class ImageProcessor
+    public class ImageService
     {
         private readonly Mat _image;
         private readonly Dictionary<char, Mat> _letterTemplates;
@@ -16,7 +17,7 @@ namespace SpellCastCheat_Console
         private const double ScaleRatioX = 12.73;
         private const double ScaleRatioY = 12.82;
 
-        public ImageProcessor(string imagePath)
+        public ImageService(string imagePath)
         {
             _image = new Mat(imagePath, ImreadModes.Color);
 
@@ -70,7 +71,7 @@ namespace SpellCastCheat_Console
             _doubleWordTemplate = _doubleWordTemplate.Resize(new Size(targetWidth, targetHeight));
         }
 
-        public void SaveResultsImages(string outputImagePath, LetterModel[,] grid, List<WordResultDTO> wordResults)
+        public void SaveResultsImages(string outputImagePath, LetterModel[,] grid, List<WordResultDTO> wordResults, bool openImage = true, bool drawWord = true)
         {
             List<Mat> resultImages = new List<Mat>();
 
@@ -108,10 +109,13 @@ namespace SpellCastCheat_Console
                     Cv2.PutText(resultImage, swap.NewLetter.ToString(), new Point(center.X - 10, center.Y + 10), HersheyFonts.HersheySimplex, 0.8, Scalar.Blue, 2);
                 }
 
-                // Add word with score text
-                var textPoint = new Point(_boardRect.X, _boardRect.Y);
-                Cv2.Rectangle(resultImage, new Rect(textPoint.X - 40, textPoint.Y - 20, 350, 40), Scalar.White, -1);
-                Cv2.PutText(resultImage, $"{wordResult.Word} - {wordResult.Score}", textPoint, HersheyFonts.HersheySimplex, 0.8, Scalar.Black, 2);
+                if (drawWord)
+                {
+                    // Add word with score text
+                    var textPoint = new Point(_boardRect.X, _boardRect.Y);
+                    Cv2.Rectangle(resultImage, new Rect(textPoint.X - 40, textPoint.Y - 20, 350, 40), Scalar.White, -1);
+                    Cv2.PutText(resultImage, $"{wordResult.Word} - {wordResult.Score}", textPoint, HersheyFonts.HersheySimplex, 0.8, Scalar.Black, 2);
+                }
 
                 resultImages.Add(resultImage);
             }
@@ -125,17 +129,19 @@ namespace SpellCastCheat_Console
             // Save the concatenated image
             concatenatedResultImage.SaveImage(outputImagePath);
 
-            // Open the image using the default photo viewer
-            string fullPath = Path.GetFullPath(outputImagePath);
-            string url = "file:///" + fullPath.Replace("\\", "/");
-            Process.Start(new ProcessStartInfo("explorer.exe", url) { UseShellExecute = true });
+            if (openImage)
+            {
+                // Open the image using the default photo viewer
+                string fullPath = Path.GetFullPath(outputImagePath);
+                string url = "file:///" + fullPath.Replace("\\", "/");
+                Process.Start(new ProcessStartInfo("explorer.exe", url) { UseShellExecute = true });
+            }
         }
 
         private Mat ConcatenateImagesVertically(List<Mat> images)
         {
             int totalHeight = images.Sum(img => img.Height);
             int maxWidth = images.Max(img => img.Width);
-
             Mat result = new Mat(new Size(maxWidth, totalHeight), MatType.CV_8UC3, Scalar.White);
 
             int currentY = 0;
@@ -226,7 +232,6 @@ namespace SpellCastCheat_Console
             DetectTemplate(board, _dlTemplate, "DL", specialTiles);
             DetectTemplate(board, _tlTemplate, "TL", specialTiles);
             DetectTemplate(board, _doubleWordTemplate, "2X", specialTiles);
-
             return specialTiles;
         }
 
@@ -271,7 +276,6 @@ namespace SpellCastCheat_Console
                     bestMatch = template.Key;
                 }
             }
-
             return bestMatch;
         }
 

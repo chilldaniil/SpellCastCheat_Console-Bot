@@ -62,4 +62,8 @@
     <Folder Include="examples\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SpellCastCheat.BusinessLogic\SpellCastCheat.BusinessLogic.csproj" />
+  </ItemGroup>
+
 </Project>

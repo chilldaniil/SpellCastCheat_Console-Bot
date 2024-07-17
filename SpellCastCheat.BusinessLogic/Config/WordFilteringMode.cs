@@ -1,4 +1,4 @@
-﻿namespace SpellCastCheat_Console
+﻿namespace SpellCastCheat.BusinessLogic
 {
     public enum WordFilteringMode
     {

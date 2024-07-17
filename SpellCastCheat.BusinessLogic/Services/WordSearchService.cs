@@ -1,12 +1,14 @@
-﻿namespace SpellCastCheat_Console
+﻿using SpellCastCheat.BusinessLogic;
+
+namespace SpellCastCheat.BusinessLogic
 {
-    public class WordFinder
+    public class WordSearchService
     {
         private readonly BoardModel _board;
-        private readonly WordList _wordList;
+        private readonly WordListModel _wordList;
         private readonly int[,] _directions = new int[,] { { -1, -1 }, { -1, 0 }, { -1, 1 }, { 0, -1 }, { 0, 1 }, { 1, -1 }, { 1, 0 }, { 1, 1 } };
 
-        public WordFinder(BoardModel board, WordList wordList)
+        public WordSearchService(BoardModel board, WordListModel wordList)
         {
             _board = board;
             _wordList = wordList;

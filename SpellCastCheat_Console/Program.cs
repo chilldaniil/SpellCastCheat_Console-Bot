@@ -1,4 +1,4 @@
-﻿using SpellCastCheat_Console;
+﻿using SpellCastCheat.BusinessLogic;
 
 public class Program
 {
@@ -14,7 +14,7 @@ public class Program
             WordFilteringMode = WordFilteringMode.Simple,
             ResultsCount = 3,
             SwapWordsMinLength = 6,
-            SwapWordsMaxLength = 10,
+            SwapWordsMaxLength = 12,
             DoubleSwapWordsMinLength = 11,
             DoubleSwapWordsMaxLength = 16,
         };
@@ -78,10 +78,10 @@ public class Program
 
         try
         {
-            var imageProcessor = new ImageProcessor(imagePath);
+            var imageProcessor = new ImageService(imagePath);
             var grid = imageProcessor.ParseBoard();
             var board = new BoardModel(grid);
-            var wordFinder = new WordFinder(board, new WordList());
+            var wordFinder = new WordSearchService(board, new WordListModel());
 
             board.DisplayBoard();
 
