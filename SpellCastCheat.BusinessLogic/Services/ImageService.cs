@@ -262,9 +262,7 @@ namespace SpellCastCheat.BusinessLogic
 
             foreach (var template in _letterTemplates)
             {
-                //double threshold = (template.Key == 'G' || template.Key == 'Q') ? 0.9 : 0.9;
-                double threshold = 0.8;
-                double result = MatchTemplateValue(grayCell, template.Value, threshold);
+                double result = MatchTemplateValue(grayCell, template.Value, GetMatchingThreshold(template.Key));
                 if (result > maxVal)
                 {
                     maxVal = result;
@@ -272,6 +270,15 @@ namespace SpellCastCheat.BusinessLogic
                 }
             }
             return bestMatch;
+        }
+
+        private double GetMatchingThreshold(char letter)
+        {
+            return letter switch
+            {
+                'L' => 0.9, // Increase the threshold for 'L'
+                _ => 0.8,
+            };
         }
 
         private static double MatchTemplateValue(Mat cell, Mat template, double threshold)
