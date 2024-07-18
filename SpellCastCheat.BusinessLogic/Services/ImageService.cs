@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using OpenCvSharp;
 
 namespace SpellCastCheat.BusinessLogic
@@ -16,6 +15,8 @@ namespace SpellCastCheat.BusinessLogic
         // Define the scale ratios - template size to board size for resizing templates depends on board size
         private const double ScaleRatioX = 12.73;
         private const double ScaleRatioY = 12.82;
+        private const double ScaleRatioPaddingX = 27.04;
+        private const double ScaleRatioPaddingY = 27.22;
 
         public ImageService(string imagePath)
         {
@@ -65,6 +66,32 @@ namespace SpellCastCheat.BusinessLogic
             _dlTemplate = _dlTemplate.Resize(new Size(targetWidth, targetHeight));
             _tlTemplate = _tlTemplate.Resize(new Size(targetWidth, targetHeight));
             _doubleWordTemplate = _doubleWordTemplate.Resize(new Size(targetWidth, targetHeight));
+        }
+
+        private Mat ResizeBoard(Mat board, int boardWidth, int boardHeight)
+        {
+            // Calculate the padding
+            int paddingWidth = (int)(boardWidth / ScaleRatioPaddingX);
+            int targetHeight = (int)(boardHeight / ScaleRatioPaddingY);
+
+            // Define the new region of interest (ROI) after removing the padding
+            int newWidth = boardWidth - 2 * paddingWidth;
+            int newHeight = boardHeight - 2 * targetHeight;
+
+            // Check if the new dimensions are valid
+            if (newWidth <= 0 || newHeight <= 0)
+            {
+                throw new ArgumentException("The padding values are too large, resulting in an invalid board size.");
+            }
+
+            // Define the ROI
+            Rect roi = new Rect(paddingWidth, targetHeight, newWidth, newHeight);
+
+            // Extract the ROI
+            Mat resizedBoard = new Mat(board, roi);
+
+            // Optionally, copy the resized board back to the original board (if you want to replace it)
+            return resizedBoard;
         }
 
         public void SaveResultsImages(string outputImagePath, LetterModel[,] grid, List<WordResultDTO> wordResults, bool openImage = true, bool drawWord = true)
@@ -190,17 +217,19 @@ namespace SpellCastCheat.BusinessLogic
         #region Grid Segmentation
         private LetterModel[,] SegmentAndParseGrid(Mat board)
         {
-            int cellWidth = board.Width / 5;
-            int cellHeight = board.Height / 5;
-            var grid = new LetterModel[5, 5];
+            var letterBoardResized = ResizeBoard(board, _boardRect.Width, _boardRect.Height);
+
+            int cellWidth = letterBoardResized.Width / 5;
+            int cellHeight = letterBoardResized.Height / 5;
             var letterCenters = new List<(char letter, Point center, int row, int col)>();
+            var grid = new LetterModel[5, 5];
 
             for (int row = 0; row < 5; row++)
             {
                 for (int col = 0; col < 5; col++)
                 {
-                    OpenCvSharp.Rect cellRect = new OpenCvSharp.Rect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
-                    Mat cell = new Mat(board, cellRect);
+                    Rect cellRect = new Rect(col * cellWidth, row * cellHeight, cellWidth, cellHeight);
+                    Mat cell = new Mat(letterBoardResized, cellRect);
                     char detectedLetter = MatchLetter(cell);
                     Point center = new Point(cellRect.X + cellRect.Width / 2, cellRect.Y + cellRect.Height / 2);
                     grid[row, col] = new LetterModel(detectedLetter, row, col)
@@ -213,6 +242,7 @@ namespace SpellCastCheat.BusinessLogic
             }
 
             var specialTiles = DetectSpecialTiles(board);
+            AdjustLetterCentersForPaddings(letterCenters, board.Width, board.Height, letterBoardResized.Width, letterBoardResized.Height);
             MapSpecialTilesToClosestLetters(grid, specialTiles, letterCenters);
             PrintGrid(grid);
 
@@ -221,6 +251,18 @@ namespace SpellCastCheat.BusinessLogic
         #endregion
 
         #region Special Tiles Detection
+        private void AdjustLetterCentersForPaddings(List<(char letter, Point center, int row, int col)> letterCenters, int originalWidth, int originalHeight, int resizedWidth, int resizedHeight)
+        {
+            int paddingWidth = (originalWidth - resizedWidth) / 2;
+            int paddingHeight = (originalHeight - resizedHeight) / 2;
+
+            for (int i = 0; i < letterCenters.Count; i++)
+            {
+                var (letter, center, row, col) = letterCenters[i];
+                letterCenters[i] = (letter, new Point(center.X + paddingWidth, center.Y + paddingHeight), row, col);
+            }
+        }
+
         private List<(string type, Point center)> DetectSpecialTiles(Mat board)
         {
             var specialTiles = new List<(string type, Point center)>();
@@ -276,7 +318,9 @@ namespace SpellCastCheat.BusinessLogic
         {
             return letter switch
             {
-                'L' => 0.9, // Increase the threshold for 'L'
+                'L' => 0.89,
+                'O' => 0.92,
+                'D' => 0.9,
                 _ => 0.8,
             };
         }

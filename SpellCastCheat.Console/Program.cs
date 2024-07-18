@@ -127,9 +127,9 @@ public class Program
             //outputImagePath = Path.Combine("Images/Results", $"double_swap_result_{DateTime.Now.Ticks}.png");
             //imageProcessor.SaveResultsImages(outputImagePath, board.Grid, bestWords);
         }
-        catch
+        catch (Exception ex)
         {
-            Console.WriteLine("Can't process image, try to load another one");
+            Console.WriteLine($"Can't process image, try to load another one. Ex: {ex.Message}");
         }
     }
 }
